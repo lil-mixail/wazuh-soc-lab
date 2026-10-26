@@ -65,9 +65,17 @@ Wazuh dashboard once the agent was reporting:
 
 ## Vulnerability assessment
 I also ran Wazuh's Vulnerability Detection against the (deliberately unpatched)
-Ubuntu box and triaged the results: [vulnerability assessment](./incidents/2026-10-26_vulnerability-assessment.md).
-The standout findings were the Ubuntu "GameOver(lay)" local privilege-escalation
-CVEs, which tie directly into the privilege-escalation scenario in IR-003.
+Ubuntu box, triaged the results, then patched and re-scanned to prove the fix:
+[vulnerability assessment](./incidents/2026-10-26_vulnerability-assessment.md).
+Patching cut Critical+High CVEs by ~44%. The standout findings were the Ubuntu
+"GameOver(lay)" local privilege-escalation CVEs, which tie directly into the
+privilege-escalation scenario in IR-003.
+
+## Hardening (CIS benchmark)
+Using Wazuh's Security Configuration Assessment I hardened the host against the
+CIS Ubuntu 24.04 benchmark — deployed a full audit ruleset (closing the IR-003
+gap), password policy, session timeout and more — raising the score from 50% to
+54% with safe controls only: [hardening notes](./incidents/2026-10-26_cis-hardening.md).
 
 (template I use for these: [`incidents/TEMPLATE.md`](./incidents/TEMPLATE.md))
 
