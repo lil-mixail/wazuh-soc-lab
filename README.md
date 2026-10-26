@@ -43,6 +43,8 @@ verifying downloads.
   and never created my user, so I reinstalled and skipped that step.
 - Ran a brute-force SSH attack from Kali with Hydra and caught it in Wazuh.
 - Wrote up the brute-force as a proper incident report.
+- Set up Active Response so Wazuh auto-blocks the attacker's IP with iptables,
+  and tested it (the block appears within seconds and expires after 180s).
 
 Wazuh dashboard once the agent was reporting:
 
@@ -55,12 +57,13 @@ Wazuh dashboard once the agent was reporting:
 | ID | What happened | MITRE | Result |
 |---|---|---|---|
 | [IR-2026-001](./incidents/2026-10-26_ssh-brute-force.md) | SSH brute force from Kali | T1110 | caught, attack failed |
+| [IR-2026-002](./incidents/2026-10-26_active-response.md) | Auto-block the brute-force source (Active Response) | T1110 | attacker auto-blocked via iptables |
+| [IR-2026-003](./incidents/2026-10-26_rogue-account.md) | Rogue root account created on the victim | T1136 / T1098 | detected and removed |
 
 (template I use for these: [`incidents/TEMPLATE.md`](./incidents/TEMPLATE.md))
 
 ## Notes to self / next steps
 
-- Set up Active Response so Wazuh auto-blocks an IP after X failures.
 - Try a privilege-escalation scenario on the Ubuntu box.
 - Go through the CIS benchmark failures the SCA module found and fix a few.
 
