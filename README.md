@@ -45,6 +45,8 @@ verifying downloads.
 - Wrote up the brute-force as a proper incident report.
 - Set up Active Response so Wazuh auto-blocks the attacker's IP with iptables,
   and tested it (the block appears within seconds and expires after 180s).
+- Simulated an attacker creating a rogue root account and caught it, then added
+  File Integrity Monitoring on sudoers/passwd/shadow to close a blind spot I found.
 
 Wazuh dashboard once the agent was reporting:
 
@@ -59,12 +61,17 @@ Wazuh dashboard once the agent was reporting:
 | [IR-2026-001](./incidents/2026-10-26_ssh-brute-force.md) | SSH brute force from Kali | T1110 | caught, attack failed |
 | [IR-2026-002](./incidents/2026-10-26_active-response.md) | Auto-block the brute-force source (Active Response) | T1110 | attacker auto-blocked via iptables |
 | [IR-2026-003](./incidents/2026-10-26_rogue-account.md) | Rogue root account created on the victim | T1136 / T1098 | detected and removed |
+| [IR-2026-004](./incidents/2026-10-26_fim-sudoers.md) | Closed the sudoers blind spot with File Integrity Monitoring | T1098 / T1548 | real-time FIM alert now fires |
+
+## Vulnerability assessment
+I also ran Wazuh's Vulnerability Detection against the (deliberately unpatched)
+Ubuntu box and triaged the results: [vulnerability assessment](./incidents/2026-10-26_vulnerability-assessment.md).
+The standout findings were the Ubuntu "GameOver(lay)" local privilege-escalation
+CVEs, which tie directly into the privilege-escalation scenario in IR-003.
 
 (template I use for these: [`incidents/TEMPLATE.md`](./incidents/TEMPLATE.md))
 
 ## Notes to self / next steps
-
-- Try a privilege-escalation scenario on the Ubuntu box.
 - Go through the CIS benchmark failures the SCA module found and fix a few.
 
 ## Tools used
